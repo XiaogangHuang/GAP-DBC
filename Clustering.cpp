@@ -329,7 +329,7 @@ void Clustering::BuildGraph_kd()
             pcores[jt][p] = dataSets[PCOR[jt][0]][p];
         }
     }
-    kdtree2 pctree(pcores, false);
+    kdtree2 pctree(pcores);
     kdtree2_result_vector matches;
     matches.reserve(dataNum);
     double radiustemp = radius + 2 * percent * radius;
