@@ -198,25 +198,16 @@ void Clustering::SetArrivalPoints_kd(int dpId) {
 
 bool Clustering::CheckCorePt_kd(double d, int cnt, int core1, int core2, vector<int>& mark)
 {
-    if (d > 2 * percent * radius)
+    if (d > 2 * radius)
     {
         return false;
-    }
-    for (size_t i = 0; i < PCOR[core1].size(); i++)
-    {
-        if (state[PCOR[core1][i]].type == 1 && distance_euclidean(dataSets[PCOR[core2][0]],
-            dataSets[PCOR[core1][i]]) <= radius)
-        {
-            return true;
-        }
     }
     vector< point_coord_type > midpoint(dataDim - 1);
     for (size_t i = 0; i < dataDim - 1; i++)
     {
         midpoint[i] = (dataSets[PCOR[core1][0]][i] + dataSets[PCOR[core2][0]][i]) / 2;
     }
-    double radiustemp = radius * percent;
-    double thresh = sqrt(radiustemp * radiustemp - d * d / 4);
+    double thresh = sqrt(radius * radius - d * d / 4);
     if (thresh < radius - thresh)
     {
         thresh = radius - thresh;
@@ -249,9 +240,47 @@ bool Clustering::CheckCorePt_kd(double d, int cnt, int core1, int core2, vector<
     }
     for (size_t i = 0; i < PCOR[core2].size(); i++)
     {
-        if (mark[PCOR[core2][i]] != 1 && distance_euclidean(midpoint, dataSets[PCOR[core2][i]]) <= thresh)
+        if (mark[PCOR[core2][i]] == 1)
+        {
+            mark[PCOR[core2][i]] = 2;
+        }
+        else if (distance_euclidean(midpoint, dataSets[PCOR[core2][i]]) <= thresh)
         {
             cnt++;
+        }
+    }
+    if (cnt >= minPTs)
+    {
+        for (size_t i = 0; i < PCOR[core2].size(); i++)
+        {
+            if (distance_euclidean(midpoint, dataSets[PCOR[core2][i]])
+                <= radius - thresh)
+            {
+                state[PCOR[core2][i]].type = 1;
+            }
+        }
+        for (size_t i = 0; i < PCOR[core2].size(); i++)
+        {
+            if (mark[PCOR[core2][i]] == 2)
+            {
+                mark[PCOR[core2][i]] = 1;
+            }
+        }
+        return true;
+    }
+    for (size_t i = 0; i < PCOR[core1].size(); i++)
+    {
+        if (mark[PCOR[core1][i]] == 1 &&
+            distance_euclidean(midpoint, dataSets[PCOR[core1][i]]) <= thresh)
+        {
+            cnt++;
+        }
+    }
+    for (size_t i = 0; i < PCOR[core2].size(); i++)
+    {
+        if (mark[PCOR[core2][i]] == 2)
+        {
+            mark[PCOR[core2][i]] = 1;
         }
     }
     if (cnt >= minPTs)
