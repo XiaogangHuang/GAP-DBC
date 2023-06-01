@@ -4,7 +4,6 @@ The C++ code, binary code for "Fast Density-Based Clustering: Geometric Approach
 
 We uploaded the Household dataset for testing the efficiency of the algorithm. Other datasets could not be uploaded due to the restriction that the uploaded file cannot be larger than 25MB. 
 
-**Remark**: Before downloading and using the binary code, you need to turn off the "Real-time Protection" option in the "Virus and Threat Protection Settings" on your windows system.
 
 ## DATA FORMAT
 The input dataset needs to be preprocessed into a text file with the following format:
