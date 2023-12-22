@@ -714,7 +714,7 @@ bool Clustering::Filter_kd(int cbs_1, int cbs_2, int* visited_cbs1,
 {
     int q = 0;
     double* distTemp = (double*)calloc(PCOR[cbs_2].size(), sizeof(double));
-    double minidist = FLT_MAX;
+    double minidist = DBL_MAX;
     visited_cbs1[query] = 1;
     visited_cbs1[PCOR[cbs_1].size()] -= 1;
     for (int i = 0; i < PCOR[cbs_2].size(); i++) {
