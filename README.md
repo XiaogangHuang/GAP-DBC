@@ -2,8 +2,6 @@
 
 The C++ code for "Fast Density-Based Clustering: Geometric Approach".
 
-We uploaded the Household dataset for testing the efficiency of the algorithm. Other datasets could not be uploaded due to the restriction that the uploaded file cannot be larger than 25MB. 
-
 
 ## DATA FORMAT
 The input dataset needs to be preprocessed into a text file with the following format:
